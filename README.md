@@ -18,11 +18,23 @@ with docker installed.
 Installation
 ------------
 
+0. Clone the project
+  ```sh
+  git clone https://github.com/jedwards1211/opensalt
+  cd opensalt
+  git checkout help
+  ```
+
 1. Install Docker from [here](https://www.docker.com/products/docker)
    and Docker Compose from [here](https://docs.docker.com/compose/install/)
-  * Note that a new user group, `docker`, has been created. The user that will interact with the Docker service will need to be in this group.
-  * Ensure to set the MySQL folder permissions: `chmod -R 777 core/docker/data/mysql`
-  * Also set the cache directory permssions: `chmod 777 core/var/cache`
+  * Create a `docker` user group and add yourself to it so you can run docker commands without `sudo`:
+    ```sh
+    sudo groupadd docker # don't worry if this fails because the group already exists
+    sudo usermod -a -G docker `whoami`
+    ```
+  * I didn't need to do the following steps on Mac, but try running these commands/creating empty directories if you run into trouble:
+    * Ensure to set the MySQL folder permissions: `chmod -R 777 core/docker/data/mysql`
+    * Also set the cache directory permssions: `chmod 777 core/var/cache`
 
 2. Create .env file
   ```
@@ -51,12 +63,14 @@ Installation
   make migrate
   ```
 
-7. http://_ip-address of web container_/ should show the initial screen with debug turned on
-  - 
+7. http://localhost:7263/ should show the initial screen with debug turned on
+  - If you need to use a different port, edit `docker-compose.yml` and replace `7263` with the port you want
 
 8. One will also need to create the administrative account and password for the system with the **super-user** role:
   - To create an organization use `./core/bin/console salt:org:add [organization name]`
-  - To create a user use `./core/bin/console salt:user:add [username] [--password="secret"] [--role="rolename"]`
+  - To create a user use `./core/bin/console salt:user:add [username] [--password="secret"] [--role="super-user"]`
+
+9. Now you should be able to log in in the browser!
 
 
 Other Docs

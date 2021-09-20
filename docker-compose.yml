@@ -96,6 +96,13 @@ services:
         - VERSION=${VERSION:-3.0.0-dev}
       cache_from:
         - opensalt/opensalt:web-develop
+    ports:
+      ########################################################################
+      # The port on the left of the : is the port you type into the browser
+      # to access the webapp.  For example if the line below is 7263:80,
+      # go to http://localhost:7263 in your browser.
+      ########################################################################
+      - 7263:80
     depends_on:
       - php
 #      - pwa
