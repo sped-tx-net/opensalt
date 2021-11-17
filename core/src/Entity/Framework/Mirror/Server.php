@@ -234,7 +234,7 @@ class Server
         return $this;
     }
 
-    public function scheduleNextCheck(?\DateTimeInterface $when = null, int $in = 604800, ?int $variance = null): void
+    public function scheduleNextCheck(?\DateTimeInterface $when = null, int $in = 86400, ?int $variance = null): void
     {
         if (null === $variance) {
             $variance = (int) ($in / 2);
@@ -247,7 +247,7 @@ class Server
         $ts = $when->getTimestamp() + $in;
 
         // Max +/- 1 week
-        $halfVariance = min(604800, (int) ($variance / 2));
+        $halfVariance = min(86400, (int) ($variance / 2));
 
         // Check again (default in 18 to 30 hours for first check)
         $nextCheck = new \DateTimeImmutable('@'.random_int($ts - $halfVariance, $ts + $halfVariance));
